@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Colaboradores{% endblock %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>Colaboradores</h1>
+        <a href="{% url 'cadastro' %}" class="btn-submit">
+            <svg class="icon"><use href="#icon-plus-circle"></use></svg>
+            Novo Colaborador
+        </a>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h4>Total de Colaboradores</h4>
+            <span class="value">{{ total_colaboradores }}</span>
+        </div>
+        <div class="stat-card">
+            <h4>Colaboradores Ativos</h4>
+            <span class="value">{{ colaboradores_ativos }}</span>
+        </div>
+        <div class="stat-card">
+            <h4>Colaboradores Inativos</h4>
+            <span class="value">{{ colaboradores_inativos }}</span>
+        </div>
+    </div>
+
+    <div class="form-card">
+        <h2>Lista de Colaboradores</h2>
+
+        <div class="search-bar">
+            <form method="GET">
+                <input type="text" name="q" placeholder="Pesquisar por nome, matrícula ou função..." value="{{ search_query }}">
+            </form>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Matrícula</th>
+                        <th>Função</th>
+                        <th>Status</th>
+                        <th class="actions">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for colab in colaboradores_lista %}
+                    <tr>
+                        <td>{{ colab.nome_completo }}</td>
+                        <td>{{ colab.matricula }}</td>
+                        <td>{{ colab.funcao }}</td>
+                        <td>{{ colab.status }}</td>
+                        <td class="actions">
+                            <a href="{% url 'colaborador_editar' colab.id %}">Editar</a>
+
+                            <!-- ============================================= -->
+                            <!-- (MUDANÇA) LINK DE EXCLUSÃO ATUALIZADO -->
+                            <!-- ============================================= -->
+                            <a href="{% url 'colaborador_excluir' colab.id %}"
+                               class="delete-trigger" 
+                               data-nome="{{ colab.nome_completo }}"
+                               style="color: #E53E3E;">
+                               Excluir
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" style="padding: 16px; text-align: center; color: #718096;">
+                            Nenhum colaborador encontrado.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- (NOVO) HTML DO MODAL DE EXCLUSÃO -->
+    <!-- ============================================= -->
+    <div class="modal-backdrop" id="deleteModalBackdrop" style="display: none;"></div>
+    <div class="modal" id="deleteModal" style="display: none;">
+        <div class="modal-header modal-header-danger"> <!-- Cabeçalho de perigo -->
+            <h3>Confirmar Exclusão</h3>
+            <button class="modal-close" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Você tem certeza que deseja excluir o colaborador <strong id="deleteModalColaboradorNome"></strong>?</p>
+            <p>Esta ação não pode ser desfeita.</p>
+        </div>
+        <div class="modal-footer">
+            <form id="deleteModalForm" method="POST">
+                {% csrf_token %}
+                <button type="button" class="btn-secondary" id="cancelModalBtn">Cancelar</button>
+                <button type="submit" class="btn-danger">Sim, Excluir</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- (NOVO) HTML DO MODAL DE FEEDBACK (PARA SUCESSO DE EDIÇÃO) -->
+    <!-- ======================================================== -->
+    <div class="modal-backdrop" id="feedbackModalBackdrop" style="display: none;"></div>
+    <div class="modal" id="feedbackModal" style="display: none;">
+        <div class="modal-header" id="feedbackModalHeader">
+            <h3 id="feedbackModalTitle"></h3>
+            <button class="modal-close" id="feedbackModalCloseBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="feedbackModalBody"></p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn-secondary" id="feedbackModalOkBtn">OK</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <h1>Equipamentos</h1>
+        <a href="{% url 'equipamento_cadastro' %}" class="btn-submit">
+            <svg class="icon"><use href="#icon-plus-circle"></use></svg>
+            Novo Equipamento
+        </a>
+    </div>
+    
+    <div class="form-card">
+        <h2>Lista de Equipamentos</h2>
+    
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Status</th>
+                        <th class="actions">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for eq in equipamentos %}
+                    <tr>
+                        <td>{{ eq.nome }}</td>
+                        <td>{{ eq.descricao }}</td>
+                        <td>{{ eq.status }}</td>
+                        <td class="actions">
+                            <a href="{% url 'equipamento_editar' eq.id %}">Editar</a>
+                            <a href="{% url 'equipamento_excluir' eq.id %}" style="color: #E53E3E;">Excluir</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="4" style="text-align:center;">Nenhum equipamento cadastrado.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- (NOVO) DIV SECRETA PARA PASSAR MENSAGENS DO DJANGO PARA O JS -->
+    <div id="feedbackData" 
+         data-success-message="{% for message in messages %}{% if message.tags == 'success' %}{{ message }}{% endif %}{% endfor %}"
+         data-error-message=""
+    ></div>
+{% endblock %}

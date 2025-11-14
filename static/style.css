@@ -1,0 +1,592 @@
+/* --- Configurações Globais --- */
+
+* {
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #F4F7F9; 
+    color: #1A202C;
+    display: flex;
+    min-height: 100vh; 
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    min-height: 100%;
+}
+
+/* --- Ícones SVG --- */
+.icon {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor; 
+    fill: none;
+    stroke-width: 2;
+    vertical-align: middle;
+    margin-right: 12px;
+}
+.icon-large {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    stroke: #1E6043;
+}
+.icon-profile {
+     width: 24px;
+     height: 24px;
+     margin-right: 12px;
+}
+
+/* --- Barra Lateral (Sidebar) --- */
+.sidebar {
+    width: 260px;
+    background-color: #1E6043;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0; 
+    height: 100vh;
+    position: sticky; 
+    top: 0;
+}
+.sidebar-header {
+    padding: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+}
+.sidebar-header .icon {
+    width: 24px;
+    height: 24px;
+    stroke: #FF8C00;
+}
+.sidebar-header-text h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+.sidebar-header-text span {
+    font-size: 0.875rem;
+    color: #A0AEC0;
+}
+
+/* Navegação Principal da Sidebar */
+.sidebar-nav {
+    flex: 1; 
+    padding: 16px 0;
+}
+.sidebar-nav ul {
+    list-style: none;
+}
+.sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    padding: 14px 24px;
+    text-decoration: none;
+    color: #E2E8F0;
+    font-weight: 500;
+    border-left: 4px solid transparent; 
+    transition: background-color 0.2s, color 0.2s; 
+}
+.sidebar-nav li a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #FFF;
+}
+.sidebar-nav li.active a {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    font-weight: 600;
+    border-left: 4px solid #FF8C00;
+}
+
+/* Rodapé da Sidebar (Informações do Usuário) */
+.sidebar-footer {
+    padding: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+}
+.sidebar-footer strong {
+    display: block;
+}
+.sidebar-footer span {
+    color: #718096;
+}
+
+/* --- Menu do Usuário (Dropdown) --- */
+.footer-profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+    border: 2px solid #FF8C00;
+}
+.sidebar-footer {
+    cursor: pointer;
+    position: relative; 
+    transition: background-color 0.2s;
+}
+.sidebar-footer:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+.sidebar-footer .user-info {
+    flex: 1;
+}
+.user-menu-dropdown {
+    display: none;
+    position: absolute;
+    bottom: 95px;
+    left: 16px;
+    width: 228px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border: 1px solid #E2E8F0;
+    overflow: hidden;
+}
+.user-menu-dropdown.show {
+    display: block;
+}
+.user-menu-dropdown a {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #2D3748;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.user-menu-dropdown a:hover {
+    background-color: #F4F7F9;
+    color: #1E6043;
+}
+
+/* --- Conteúdo Principal --- */
+.content {
+    flex: 1; 
+    padding: 40px;
+    overflow-y: auto; 
+}
+.content h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #2D3748;
+}
+
+/* Card Branco (Formulários e Listas) */
+.form-card {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 32px;
+    /* (Removido max-width: 800px para a lista) */
+}
+.form-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+}
+.form-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1A202C;
+}
+
+/* Grupos de Formulário */
+.form-group {
+    margin-bottom: 24px;
+}
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.875rem;
+}
+.form-group .required {
+    color: #E53E3E;
+}
+
+/* Inputs e Selects */
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #CBD5E0;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #FFFFFF;
+    transition: border-color 0.2s, box-shadow 0.2s; 
+}
+.form-group input[type="text"]:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #1E6043;
+    box-shadow: 0 0 0 2px rgba(30, 96, 67, 0.2); 
+}
+.form-group input::placeholder {
+    color: #A0AEC0;
+}
+.form-group select {
+     color: #1A202C;
+}
+.form-group select:invalid {
+    color: #A0AEC0;
+}
+.form-group option {
+    color: #1A202C;
+}
+
+/* Ações do Formulário (Botões) */
+.form-actions {
+    text-align: right;
+    margin-top: 32px;
+}
+
+/* Botão Principal (Submit) */
+.btn-submit {
+    background-color: #FF8C00;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s; 
+    display: inline-flex; 
+    align-items: center; 
+    text-decoration: none; /* Adicionado para links <a> */
+}
+.btn-submit .icon {
+     width: 18px;
+     height: 18px;
+     stroke: #FFF;
+     margin-right: 8px;
+}
+.btn-submit:hover {
+    background-color: #D97706;
+}
+.btn-submit:active {
+    transform: scale(0.98);
+}
+
+/* Alertas de Mensagem (Django Messages) */
+.messages {
+    margin-bottom: 20px;
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.alert-error, .alert-danger { /* 'danger' é o tag do Django */
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+
+/* --- Estilos da Lista (index.html) --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.page-header .btn-submit {
+    display: inline-flex;
+    align-items: center;
+}
+.page-header .btn-submit .icon {
+    width: 18px;
+    height: 18px;
+    stroke: #FFF;
+    margin-right: 8px;
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 24px;
+    margin-bottom: 32px;
+}
+.stat-card {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 24px;
+}
+.stat-card h4 {
+    font-size: 0.875rem;
+    color: #718096;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+.stat-card .value {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #1A202C;
+}
+
+/* Barra de Pesquisa */
+.search-bar {
+    margin-bottom: 24px;
+}
+.search-bar input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #CBD5E0;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #FFFFFF;
+}
+.search-bar input:focus {
+    outline: none;
+    border-color: #1E6043;
+    box-shadow: 0 0 0 2px rgba(30, 96, 67, 0.2);
+}
+
+/* Tabela de Dados */
+.table-container {
+    width: 100%;
+    overflow-x: auto; 
+}
+.data-table {
+    width: 100%;
+    border-collapse: collapse; 
+    text-align: left;
+}
+.data-table th {
+    padding: 16px;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #718096;
+    border-bottom: 2px solid #E2E8F0; 
+}
+.data-table td {
+    padding: 16px;
+    font-size: 0.95rem;
+    color: #2D3748;
+    border-bottom: 1px solid #E2E8F0; 
+}
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+.data-table .actions {
+    text-align: right;
+}
+.data-table .actions a {
+    margin-left: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #1E6043;
+}
+.data-table .actions a:hover {
+    text-decoration: underline;
+}
+
+/* --- Media Query (Responsividade) --- */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .sidebar-nav {
+        display: flex;
+        padding: 0;
+    }
+    .sidebar-nav ul {
+        display: flex;
+    }
+    .sidebar-nav li a {
+        padding: 16px;
+        border-left: none;
+        border-bottom: 4px solid transparent;
+    }
+    .sidebar-nav li.active a {
+        border-left: none;
+        border-bottom: 4px solid #FF8C00;
+    }
+    .sidebar-nav span {
+        display: none;
+    }
+     .sidebar-nav li a .icon {
+         margin-right: 0;
+     }
+    .sidebar-header {
+        border-bottom: none;
+        padding: 16px;
+    }
+    .sidebar-footer {
+        display: none; 
+    }
+    
+    .content {
+        padding: 20px;
+    }
+    .content h1 {
+        font-size: 1.5rem;
+    }
+    .form-card {
+        padding: 20px;
+    }
+    /* Grade de Stats em telas pequenas */
+    .stats-grid {
+        grid-template-columns: 1fr; /* 1 coluna */
+    }
+}
+
+
+/* =========================================
+   (NOVO) ESTILOS DO MENU E MODAL
+   ========================================= */
+
+/* (NOVO) Separador do Menu Lateral */
+.sidebar-nav li.separator {
+    padding: 16px 24px 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #A0AEC0;
+    text-transform: uppercase;
+}
+
+/* (NOVO) Estilos do Modal de Exclusão */
+.modal-backdrop {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+.modal {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    z-index: 1001;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #E2E8F0;
+}
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    color: #A0AEC0;
+    cursor: pointer;
+}
+.modal-body {
+    padding: 20px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #2D3748;
+}
+.modal-body p {
+    margin-bottom: 10px;
+}
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    border-top: 1px solid #E2E8F0;
+}
+.modal-footer button {
+    margin-left: 10px;
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    border: none;
+}
+/* Botão Secundário (Cancelar) */
+.btn-secondary {
+    background-color: #A0AEC0;
+    color: #FFFFFF;
+}
+.btn-secondary:hover {
+    background-color: #718096;
+}
+/* Botão de Perigo (Excluir) */
+.btn-danger {
+    background-color: #E53E3E;
+    color: #FFFFFF;
+}
+.btn-danger:hover {
+    background-color: #C53030;
+}
+
+/* =========================================
+   (NOVO) ESTILOS DO MODAL DE FEEDBACK
+   ========================================= */
+
+/* (O modal de feedback reutiliza 90% dos estilos do modal de exclusão) */
+
+/* (NOVO) Cabeçalho de Sucesso (Verde) */
+.modal-header-success {
+    background-color: #C6F6D5; /* Fundo verde claro */
+    color: #22543D; /* Texto verde escuro */
+    border-bottom: 1px solid #9AE6B4;
+}
+.modal-header-success .modal-close {
+    color: #22543D;
+}
+
+/* (NOVO) Cabeçalho de Falha (Vermelho) */
+.modal-header-danger {
+    background-color: #FED7D7; /* Fundo vermelho claro */
+    color: #822727; /* Texto vermelho escuro */
+    border-bottom: 1px solid #FEB2B2;
+}
+.modal-header-danger .modal-close {
+    color: #822727;
+}
+
+/* (NOVO) Botão OK no rodapé do modal de feedback */
+#feedbackModal .modal-footer .btn-secondary {
+    background-color: #1E6043; /* Botão OK verde */
+    color: #FFF;
+}
+#feedbackModal .modal-footer .btn-secondary:hover {
+    background-color: #1A5338;
+}
